@@ -37,7 +37,7 @@ public class Logger {
 	 * ----------------------------
 	 ******************************/
 
-	private Boolean isTabify;
+	private Boolean tabifyFlag;
 	private PrintStream out;
 	private PrintStream err;
 	private Map<String, Timer> timers;
@@ -60,7 +60,7 @@ public class Logger {
 	public Logger start(String timerName) {
 		timers.put(timerName, new Timer());
 		timers.get(timerName).start();
-		out.println((isTabify ? tabify() : "") + timerName + " - Started ... ");
+		out.println(tabify() + timerName + " - Started ... ");
 		numTabs++;
 		return this;
 	}
@@ -81,7 +81,7 @@ public class Logger {
 			Long time = timers.get(timerName).end();
 			timers.remove(timerName);
 			numTabs--;
-			out.println((isTabify ? tabify() : "") + timerName + String.format(" - Done - %d (ms)", time));
+			out.println(tabify() + timerName + String.format(" - Done - %d (ms)", time));
 		} catch (NullPointerException e) {
 			logError("Sorry, \"" + timerName + "\" was never started.");
 		}
@@ -125,7 +125,7 @@ public class Logger {
 	 * isTabify as true
 	 */
 	public Logger() {
-		isTabify = true;
+		tabifyFlag = true;
 		out = System.out;
 		err = System.err;
 		timers = new HashMap<String, Timer>();
@@ -140,7 +140,7 @@ public class Logger {
 	 *            - PrintStream used for both output and errors
 	 */
 	public Logger(PrintStream outAndErrStream) {
-		isTabify = true;
+		tabifyFlag = true;
 		out = err = outAndErrStream;
 		timers = new HashMap<String, Timer>();
 		numTabs = 0;
@@ -156,7 +156,7 @@ public class Logger {
 	 *            - PrinStream used for errors
 	 */
 	public Logger(PrintStream outStream, PrintStream errStream) {
-		isTabify = true;
+		tabifyFlag = true;
 		out = outStream;
 		err = errStream;
 		timers = new HashMap<String, Timer>();
@@ -170,7 +170,7 @@ public class Logger {
 	 *            - Boolean for whether to tabify or not
 	 */
 	public Logger(Boolean isTabify) {
-		this.isTabify = isTabify;
+		tabifyFlag = isTabify;
 		out = System.out;
 		err = System.err;
 		timers = new HashMap<String, Timer>();
@@ -187,7 +187,7 @@ public class Logger {
 	 *            - Boolean for whether to tabify or not
 	 */
 	public Logger(PrintStream outAndErrStream, Boolean isTabify) {
-		this.isTabify = isTabify;
+		tabifyFlag = isTabify;
 		isTabify = true;
 		out = err = outAndErrStream;
 		timers = new HashMap<String, Timer>();
@@ -206,7 +206,7 @@ public class Logger {
 	 *            - Boolean for whether to tabify or not
 	 */
 	public Logger(PrintStream outStream, PrintStream errStream, Boolean isTabify) {
-		this.isTabify = isTabify;
+		tabifyFlag = isTabify;
 		isTabify = true;
 		out = outStream;
 		err = errStream;
@@ -221,7 +221,7 @@ public class Logger {
 	 *            - Other Logger to Copy
 	 */
 	public Logger(Logger other) {
-		isTabify = other.isTabify;
+		tabifyFlag = other.tabifyFlag;
 		out = other.out;
 		err = other.err;
 		timers = other.timers;
@@ -238,7 +238,7 @@ public class Logger {
 	 * @return Boolean
 	 */
 	public Boolean isTabify() {
-		return isTabify;
+		return tabifyFlag;
 	}
 
 	/**
@@ -246,8 +246,8 @@ public class Logger {
 	 * 
 	 * @param isTabify
 	 */
-	public void setIsTabify(Boolean isTabify) {
-		this.isTabify = isTabify;
+	public void setTabifyFlag(Boolean isTabify) {
+		tabifyFlag = isTabify;
 	}
 
 	/******************************
@@ -261,7 +261,7 @@ public class Logger {
 	 */
 	private String tabify() {
 		String tabs = "";
-		for (int i = 0; i < numTabs; i++) {
+		for (int i = 0; tabifyFlag && i < numTabs; i++) {
 			tabs += "   ";
 		}
 		return tabs;
