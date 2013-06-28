@@ -84,6 +84,11 @@ public class Logger {
 			out.println(tabify() + timerName + String.format(" - Done - %d (ms)", time));
 		} catch (NullPointerException e) {
 			logError("Sorry, \"" + timerName + "\" was never started.");
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
 		}
 		return this;
 	}
