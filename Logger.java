@@ -50,54 +50,70 @@ public class Logger {
 	/**
 	 * Start: Starts a timer with the given name attached and
 	 * logs that it was started
+	 * -
+	 * This function returns a Logger so that commands can be stacked
 	 * 
 	 * @param timerName
 	 *            - Name of Timer
+	 * @return Logger - useful for stacking calls
 	 */
-	public void start(String timerName) {
+	public Logger start(String timerName) {
 		timers.put(timerName, new Timer());
 		timers.get(timerName).start();
 		out.println((isTabify ? tabify() : "") + timerName + " - Started ... ");
 		numTabs++;
+		return this;
 	}
 
 	/**
 	 * End: Ends a timer with the given name attached and logs
 	 * that it is done. If there is no timer with the given name,
 	 * it will log an error.
+	 * -
+	 * This function returns a Logger so that commands can be stacked
 	 * 
 	 * @param timerName
 	 *            - Name of Timer
+	 * @return Logger - useful for stacking calls
 	 */
-	public void end(String timerName) {
+	public Logger end(String timerName) {
 		try {
 			Long time = timers.get(timerName).end();
 			timers.remove(timerName);
 			numTabs--;
 			out.println((isTabify ? tabify() : "") + timerName + String.format(" - Done - %d (ms)", time));
 		} catch (NullPointerException e) {
-			logError("Sorry, \"" + timerName + "\" was not started.");
+			logError("Sorry, \"" + timerName + "\" was never started.");
 		}
+		return this;
 	}
 
 	/**
 	 * Logs a given message on the out stream
+	 * -
+	 * This function returns a Logger so that commands can be stacked
 	 * 
 	 * @param logMessage
 	 *            - Message to Log
+	 * @return Logger - useful for stacking calls
 	 */
-	public void log(String logMessage) {
+	public Logger log(String logMessage) {
 		out.println("-- " + logMessage);
+		return this;
 	}
 
 	/**
 	 * Logs a given error message on the err stream
+	 * -
+	 * This function returns a Logger so that commands can be stacked
 	 * 
 	 * @param errorMessage
 	 *            - Error Message to Log
+	 * @return Logger - useful for stacking calls
 	 */
-	public void logError(String errorMessage) {
+	public Logger logError(String errorMessage) {
 		err.println("-- " + errorMessage);
+		return this;
 	}
 
 	/******************************
