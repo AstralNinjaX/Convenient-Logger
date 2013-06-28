@@ -75,6 +75,21 @@ public class Logger {
 	}
 
 	/**
+	 * Start: Starts a timer with the given name attached and
+	 * logs that it was started. The timer's name will be taken using the
+	 * Object passed in's toString() function.
+	 * -
+	 * This function returns a Logger so that commands can be stacked
+	 * 
+	 * @param getTimerNameFrom
+	 *            - Object Used to Get Name of Timer
+	 * @return Logger - useful for stacking calls
+	 */
+	public Logger start(Object getTimerNameFrom) {
+		return start(getTimerNameFrom.toString());
+	}
+
+	/**
 	 * End: Ends a timer with the given name attached and logs
 	 * that it is done. If there is no timer with the given name,
 	 * it will log an error.
@@ -102,6 +117,21 @@ public class Logger {
 			}
 		}
 		return this;
+	}
+
+	/**
+	 * End: Ends a timer with the given name attached and logs
+	 * that it is done. The timer's name will be taken using the
+	 * Object passed in's toString() function.
+	 * -
+	 * This function returns a Logger so that commands can be stacked
+	 * 
+	 * @param getTimerNameFrom
+	 *            - Object Used to Get Name of Timer
+	 * @return Logger - useful for stacking calls
+	 */
+	public Logger end(Object getTimerNameFrom) {
+		return end(getTimerNameFrom.toString());
 	}
 
 	/**
