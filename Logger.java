@@ -37,10 +37,19 @@ public class Logger {
 	 * ----------------------------
 	 ******************************/
 
+	// Only tabify when tabifyFlag is set
 	private Boolean tabifyFlag;
+
+	// Printstream used for normal output
 	private PrintStream out;
+
+	// Printstream used for error output
 	private PrintStream err;
+
+	// Map to hold the timers and give them names
 	private Map<String, Timer> timers;
+
+	// Number of tabs to place in tabify
 	private Integer numTabs;
 
 	/******************************
@@ -84,6 +93,8 @@ public class Logger {
 			out.println(tabify() + timerName + String.format(" - Done - %d (ms)", time));
 		} catch (NullPointerException e) {
 			logError("Sorry, \"" + timerName + "\" was never started.");
+			// Sleep for 1ms. This ensure that the error is printed in order
+			// and not later on down the road
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException ex) {
@@ -266,6 +277,7 @@ public class Logger {
 	 */
 	private String tabify() {
 		String tabs = "";
+		// Only adds tabs if tabifyFlag is set
 		for (int i = 0; tabifyFlag && i < numTabs; i++) {
 			tabs += "   ";
 		}
@@ -274,7 +286,7 @@ public class Logger {
 
 	/**
 	 * Timer class that controls start and stop functionality,
-	 * returning a Long on stop
+	 * returning a Long with time difference on stop
 	 */
 	private class Timer {
 		private Date startDate;
