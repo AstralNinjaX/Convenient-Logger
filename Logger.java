@@ -114,7 +114,7 @@ public class Logger {
 	 * @return Logger - useful for stacking calls
 	 */
 	public Logger log(String logMessage) {
-		out.println("-- " + logMessage);
+		out.println(tabify() + "-- " + logMessage);
 		return this;
 	}
 
@@ -128,7 +128,7 @@ public class Logger {
 	 * @return Logger - useful for stacking calls
 	 */
 	public Logger logError(String errorMessage) {
-		err.println("-- " + errorMessage);
+		err.println(tabify() + "-- " + errorMessage);
 		return this;
 	}
 
