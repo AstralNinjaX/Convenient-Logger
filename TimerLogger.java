@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The Logger class is designed to make logging fast and easy.
+ * The TimerLogger class is designed to make logging fast and easy.
  * 
  * @author Devin Falgoust
  * 
@@ -24,7 +24,7 @@ import java.util.Map;
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-public class Logger {
+public class TimerLogger {
 
 	/******************************
 	 * ----------------------------
@@ -66,7 +66,7 @@ public class Logger {
 	 *            - Name of Timer
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger start(String timerName) {
+	public TimerLogger start(String timerName) {
 		timers.put(timerName, new Timer());
 		timers.get(timerName).start();
 		out.println(tabify() + timerName + " - Started ... ");
@@ -85,7 +85,7 @@ public class Logger {
 	 *            - Object Used to Get Name of Timer
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger start(Object getTimerNameFrom) {
+	public TimerLogger start(Object getTimerNameFrom) {
 		return start(getTimerNameFrom.toString());
 	}
 
@@ -100,7 +100,7 @@ public class Logger {
 	 *            - Name of Timer
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger end(String timerName) {
+	public TimerLogger end(String timerName) {
 		try {
 			Long time = timers.get(timerName).end();
 			timers.remove(timerName);
@@ -130,7 +130,7 @@ public class Logger {
 	 *            - Object Used to Get Name of Timer
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger end(Object getTimerNameFrom) {
+	public TimerLogger end(Object getTimerNameFrom) {
 		return end(getTimerNameFrom.toString());
 	}
 
@@ -143,7 +143,7 @@ public class Logger {
 	 *            - Message to Log
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger log(String logMessage) {
+	public TimerLogger log(String logMessage) {
 		out.println(tabify() + "-- " + logMessage);
 		return this;
 	}
@@ -157,7 +157,7 @@ public class Logger {
 	 *            - Error Message to Log
 	 * @return Logger - useful for stacking calls
 	 */
-	public Logger logError(String errorMessage) {
+	public TimerLogger logError(String errorMessage) {
 		err.println(tabify() + "-- " + errorMessage);
 		return this;
 	}
@@ -170,7 +170,7 @@ public class Logger {
 	 * Default Constructor: Init with System.out, System.err, and
 	 * isTabify as true
 	 */
-	public Logger() {
+	public TimerLogger() {
 		tabifyFlag = true;
 		out = System.out;
 		err = System.err;
@@ -185,7 +185,7 @@ public class Logger {
 	 * @param outAndErrStream
 	 *            - PrintStream used for both output and errors
 	 */
-	public Logger(PrintStream outAndErrStream) {
+	public TimerLogger(PrintStream outAndErrStream) {
 		tabifyFlag = true;
 		out = err = outAndErrStream;
 		timers = new HashMap<String, Timer>();
@@ -201,7 +201,7 @@ public class Logger {
 	 * @param errStream
 	 *            - PrinStream used for errors
 	 */
-	public Logger(PrintStream outStream, PrintStream errStream) {
+	public TimerLogger(PrintStream outStream, PrintStream errStream) {
 		tabifyFlag = true;
 		out = outStream;
 		err = errStream;
@@ -215,7 +215,7 @@ public class Logger {
 	 * @param isTabify
 	 *            - Boolean for whether to tabify or not
 	 */
-	public Logger(Boolean isTabify) {
+	public TimerLogger(Boolean isTabify) {
 		tabifyFlag = isTabify;
 		out = System.out;
 		err = System.err;
@@ -232,7 +232,7 @@ public class Logger {
 	 * @param isTabify
 	 *            - Boolean for whether to tabify or not
 	 */
-	public Logger(PrintStream outAndErrStream, Boolean isTabify) {
+	public TimerLogger(PrintStream outAndErrStream, Boolean isTabify) {
 		tabifyFlag = isTabify;
 		isTabify = true;
 		out = err = outAndErrStream;
@@ -251,7 +251,7 @@ public class Logger {
 	 * @param isTabify
 	 *            - Boolean for whether to tabify or not
 	 */
-	public Logger(PrintStream outStream, PrintStream errStream, Boolean isTabify) {
+	public TimerLogger(PrintStream outStream, PrintStream errStream, Boolean isTabify) {
 		tabifyFlag = isTabify;
 		isTabify = true;
 		out = outStream;
@@ -266,7 +266,7 @@ public class Logger {
 	 * @param other
 	 *            - Other Logger to Copy
 	 */
-	public Logger(Logger other) {
+	public TimerLogger(TimerLogger other) {
 		tabifyFlag = other.tabifyFlag;
 		out = other.out;
 		err = other.err;
@@ -294,6 +294,34 @@ public class Logger {
 	 */
 	public void setTabifyFlag(Boolean isTabify) {
 		tabifyFlag = isTabify;
+	}
+
+	/**
+	 * Set the PrintStream used for standard output
+	 * 
+	 * @param out
+	 */
+	public void setOutPrintStream(PrintStream out) {
+		this.out = out;
+	}
+
+	/**
+	 * Set the PrintStream used for standard error output
+	 * 
+	 * @param err
+	 */
+	public void setErrPrintStream(PrintStream err) {
+		this.err = err;
+	}
+
+	/**
+	 * Set the PrintStreams used for standard output and standard error output
+	 * 
+	 * @param stream
+	 */
+	public void setOutAndErrPrintStreams(PrintStream stream) {
+		out = stream;
+		err = stream;
 	}
 
 	/******************************
