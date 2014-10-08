@@ -7,9 +7,11 @@ It can log to any PrintStream provided, with a default of System.out for general
 
 The TimerLoggable and StaticTimerLoggable abstract classes can be extended to proved TimerLogger functionality without needing to create a TimerLogger.
 
+I have also provided a JAR file with the Java and Class files, so that you can use that directly instead of the java files themselves.
+
 ==========
 
-Copyright 2013 Devin Falgoust
+Copyright 2013 - 2014 Devin Falgoust
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
