@@ -1,4 +1,4 @@
-package log;
+package devinfalgoust.util.timerlogger;
 
 import java.io.PrintStream;
 
